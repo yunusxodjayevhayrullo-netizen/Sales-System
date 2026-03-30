@@ -48,6 +48,24 @@ Every package extends `tsconfig.base.json` which sets `composite: true`. The roo
 - `pnpm run build` — runs `typecheck` first, then recursively runs `build` in all packages that define it
 - `pnpm run typecheck` — runs `tsc --build --emitDeclarationOnly` using project references
 
+## Authentication
+
+Google OAuth 2.0 via `passport-google-oauth20`. Only the single admin (`admin@example.com`) is permitted.
+
+- Passport config: `artifacts/api-server/src/lib/passport.ts`
+- Auth routes: `artifacts/api-server/src/routes/auth.ts` (mounted directly on app, not under `/api`)
+- Session: `express-session` with `SESSION_SECRET` env var
+- Required secrets: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`
+- Callback URL: `https://sales-system-uz.onrender.com/auth/google/callback`
+
+| Route | Description |
+|---|---|
+| `GET /auth/google` | Initiates OAuth flow |
+| `GET /auth/google/callback` | OAuth callback, redirects to `/auth/failure` on non-admin |
+| `GET /auth/failure` | Returns 403 for unauthorized users |
+| `GET /auth/logout` | Logs out the current session |
+| `GET /auth/me` | Returns current authenticated user (401 if not logged in) |
+
 ## Packages
 
 ### `artifacts/api-server` (`@workspace/api-server`)
