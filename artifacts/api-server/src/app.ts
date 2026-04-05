@@ -2,11 +2,15 @@ import express, { type Express } from "express";
 import cors from "cors";
 import pinoHttp from "pino-http";
 import session from "express-session";
+import path from "path";
+import { fileURLToPath } from "url";
 import router from "./routes";
 import authRouter from "./routes/auth";
 import { logger } from "./lib/logger";
 import "./lib/passport";
 import passport from "passport";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app: Express = express();
 
@@ -47,5 +51,11 @@ app.use(passport.session());
 
 app.use(authRouter);
 app.use("/api", router);
+
+const publicDir = path.resolve(__dirname, "../public");
+app.use("/chat", express.static(publicDir));
+app.get("/chat", (_req, res) => {
+  res.sendFile(path.join(publicDir, "chat.html"));
+});
 
 export default app;

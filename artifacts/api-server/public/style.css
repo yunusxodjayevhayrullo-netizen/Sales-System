@@ -1,0 +1,238 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #f0f2f5;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-wrapper {
+  width: 100%;
+  max-width: 480px;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  box-shadow: 0 0 24px rgba(0,0,0,0.08);
+}
+
+.chat-header {
+  padding: 16px 20px;
+  background: #1a1a2e;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.chat-header .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e94560;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.chat-header .info h2 {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.chat-header .info span {
+  font-size: 12px;
+  color: #a0a0b0;
+}
+
+.hint-bar {
+  background: #f7f8fc;
+  border-bottom: 1px solid #eee;
+  padding: 10px 16px;
+  font-size: 12px;
+  color: #555;
+  flex-shrink: 0;
+  line-height: 1.7;
+}
+
+.hint-bar strong {
+  display: block;
+  color: #1a1a2e;
+  margin-bottom: 2px;
+  font-size: 12px;
+}
+
+.hint-bar span {
+  color: #e94560;
+  font-weight: 500;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scroll-behavior: smooth;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  max-width: 78%;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.message.user {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.message.ai {
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+.bubble {
+  padding: 10px 14px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.message.user .bubble {
+  background: #1a1a2e;
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.message.ai .bubble {
+  background: #f0f2f5;
+  color: #1a1a2e;
+  border-bottom-left-radius: 4px;
+}
+
+.message.ai .bubble.order-done {
+  background: #e6f9f0;
+  color: #1a7a4a;
+  font-weight: 600;
+  border: 1px solid #b2dfc9;
+}
+
+.meta {
+  font-size: 11px;
+  color: #aaa;
+  margin-top: 3px;
+  padding: 0 4px;
+}
+
+.typing-indicator {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 10px 14px;
+  background: #f0f2f5;
+  border-radius: 18px;
+  border-bottom-left-radius: 4px;
+  width: fit-content;
+}
+
+.typing-indicator span {
+  width: 7px;
+  height: 7px;
+  background: #aaa;
+  border-radius: 50%;
+  animation: bounce 1.2s infinite;
+}
+
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30%            { transform: translateY(-5px); }
+}
+
+.chat-input-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-top: 1px solid #eee;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+#messageInput {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 24px;
+  padding: 10px 16px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: none;
+  font-family: inherit;
+}
+
+#messageInput:focus {
+  border-color: #1a1a2e;
+}
+
+#messageInput:disabled {
+  background: #f7f7f7;
+}
+
+#sendBtn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: #1a1a2e;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+#sendBtn:hover:not(:disabled) {
+  background: #e94560;
+}
+
+#sendBtn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.state-badge {
+  font-size: 10px;
+  background: #eee;
+  color: #888;
+  padding: 2px 8px;
+  border-radius: 10px;
+  align-self: center;
+  margin: 4px auto;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
