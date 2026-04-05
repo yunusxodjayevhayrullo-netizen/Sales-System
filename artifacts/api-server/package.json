@@ -17,10 +17,13 @@
     "drizzle-orm": "catalog:",
     "express": "^5",
     "express-session": "^1.19.0",
+    "openai": "^6.33.0",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
+    "pg": "^8.20.0",
     "pino": "^9",
-    "pino-http": "^10"
+    "pino-http": "^10",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",

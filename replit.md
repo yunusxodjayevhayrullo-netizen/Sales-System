@@ -48,6 +48,32 @@ Every package extends `tsconfig.base.json` which sets `composite: true`. The roo
 - `pnpm run build` — runs `typecheck` first, then recursively runs `build` in all packages that define it
 - `pnpm run typecheck` — runs `tsc --build --emitDeclarationOnly` using project references
 
+## Sales Chat System
+
+Instagram clothing business sales flow via AI. Routes at `POST /api/chat/message`.
+
+- **Model layer**: `artifacts/api-server/src/models/db.ts` — PostgreSQL-backed `userRepo`, `messageRepo`, `orderRepo`
+- **AI service**: `artifacts/api-server/src/services/ai.ts` — `generateSalesReply()` via OpenRouter (`qwen/qwen3.5-9b`), Uzbek-primary
+- **Sales flow**: `artifacts/api-server/src/services/salesFlow.ts` — state machine (GREETING → NEED → PRODUCT → SIZE → PHONE → ADDRESS → CONFIRM)
+- **Route**: `artifacts/api-server/src/routes/chat.ts` — `POST /api/chat/message`
+- AI integration: Replit OpenRouter (no API key needed, billed to credits)
+
+### DB tables
+
+| Table | Purpose |
+|---|---|
+| `users` | Stores `id` + current `state` |
+| `messages` | Full chat history per user |
+| `orders` | Completed orders (`product`, `size`, `phone`, `address`, `status`) |
+
+### API
+
+`POST /api/chat/message`  
+Body: `{ user_id: string, message: string }`  
+Response: `{ reply: string, state: string }`
+
+When all data collected and user confirms → order saved, reply is "Buyurtmangiz qabul qilindi".
+
 ## Authentication
 
 Google OAuth 2.0 via `passport-google-oauth20`. Only the single admin (`admin@example.com`) is permitted.
